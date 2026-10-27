@@ -6,17 +6,18 @@
 
 <p align="center">
   <strong>The Private, 100% Offline PDF & Document Studio.</strong><br>
-  Convert Excel to PDF, Images to PDF, Word to Excel, Merge & Split — entirely offline on your laptop with zero data leakage.
+  Convert Excel to PDF, Images to PDF, Word to Excel, Merge & Split — entirely offline on your MacBook & Windows PC with zero data leakage.
 </p>
 
 <p align="center">
+  <a href="https://github.com/djakamiriandi/PrivaPDF/releases/latest"><img src="https://img.shields.io/badge/Download-macOS_App.dmg-blue?style=for-the-badge&logo=apple" alt="Download macOS" /></a>
   <a href="https://github.com/djakamiriandi/PrivaPDF/releases/latest"><img src="https://img.shields.io/badge/Download-Windows_App.zip-blue?style=for-the-badge&logo=windows" alt="Download Windows" /></a>
   <a href="https://github.com/djakamiriandi/PrivaPDF"><img src="https://img.shields.io/badge/Run_Local-Web_App-6366f1?style=for-the-badge&logo=googlechrome" alt="Run Local Web" /></a>
 </p>
 
 <p align="center">
   <a href="https://github.com/djakamiriandi/PrivaPDF/releases"><img src="https://img.shields.io/badge/Release-v1.0.0-blue?style=flat-square" alt="Release" /></a>
-  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Web-555?style=flat-square" alt="Cross-Platform" />
+  <img src="https://img.shields.io/badge/Platform-macOS%20%7C%20Windows%20%7C%20Web-555?style=flat-square" alt="Cross-Platform" />
   <img src="https://img.shields.io/badge/Stack-React%20%7C%20Vite%20%7C%20Electron-61DAFB?style=flat-square&logo=react" alt="Tech Stack" />
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License MIT" /></a>
   <a href="SECURITY.md"><img src="https://img.shields.io/badge/Telemetry-Zero-success?style=flat-square" alt="Zero Telemetry" /></a>
@@ -25,20 +26,32 @@
 
 ---
 
-## ⚡ Quick Download & Install (For Windows Users / Non-Programmers)
+## ⚡ Quick Download & Install (For Everyone / Mac & Windows)
 
 > [!IMPORTANT]
 > **New to GitHub / Bukan Programmer?**  
 > **JANGAN** klik tombol hijau `Code -> Download ZIP` di atas! Itu hanya berisi kode sumber mentah (*source code*) dan tidak bisa langsung dijalankan tanpa Node.js.  
 >  
-> 👉 **Unduh aplikasi Windows siap pakai langsung di sini:**  
-> 🔗 [**Download PrivaPDF-Windows-x64.zip (Klik di sini)**](https://github.com/djakamiriandi/PrivaPDF/releases/latest)
+> 👉 **Unduh aplikasi desktop siap pakai langsung di sini:**  
+> 🍏 [**Download untuk MacBook / macOS (PrivaPDF-1.0.0-arm64.dmg)**](https://github.com/djakamiriandi/PrivaPDF/releases/latest)  
+> 🪟 [**Download untuk Windows (PrivaPDF-Windows-x64.zip)**](https://github.com/djakamiriandi/PrivaPDF/releases/latest)
 
-### 📲 3 Langkah Mudah Memasang di Windows:
-1. **Unduh Paket**: Klik tautan download di atas untuk mengunduh `PrivaPDF-Windows-x64.zip`.
-2. **Ekstrak File**: Klik kanan pada file `.zip` yang diunduh → pilih **"Extract All..."** (Ekstrak Semua).
-3. **Buka Aplikasi**: Masuk ke folder hasil ekstraksi, lalu **klik dua kali `PrivaPDF.exe`**.
-   * *Aplikasi langsung terbuka sebagai software desktop mandiri tanpa perlu instalasi tambahan, tanpa perlu koneksi internet, dan 100% aman!*
+---
+
+### 🍏 Panduan Memasang di MacBook (macOS):
+1. **Unduh Installer**: Klik tautan download Mac di atas untuk mendapatkan `PrivaPDF-1.0.0-arm64.dmg`.
+2. **Pasang ke Mac**: Klik dua kali file `.dmg`, lalu **tarik (*drag & drop*) icon PrivaPDF ke folder Applications**.
+3. **Buka Aplikasi**: Buka PrivaPDF dari Launchpad atau folder Applications.
+   * *Jika muncul pesan "App is from an unidentified developer" pada pembukaan pertama*:  
+     Cukup **Klik Kanan (Control + Klik)** icon PrivaPDF di Applications ➡️ pilih **Open** ➡️ klik **Open**. *(Hanya perlu 1 kali saja)*.
+
+---
+
+### 🪟 Panduan Memasang di Windows PC:
+1. **Unduh Paket**: Klik tautan download Windows di atas untuk mengunduh `PrivaPDF-Windows-x64.zip`.
+2. **Ekstrak File**: Klik kanan file `.zip` ➡️ pilih **"Extract All..."** (Ekstrak Semua).
+3. **Buka Aplikasi**: Masuk ke folder hasil ekstrak, lalu **klik dua kali `PrivaPDF.exe`**.
+   * *Aplikasi langsung terbuka tanpa instalasi tambahan dan tanpa perlu koneksi internet!*
 
 ---
 
@@ -50,11 +63,12 @@ Situs konversi PDF populer seperti **iLovePDF**, **Smallpdf**, atau **Adobe Onli
 
 | Fitur | Cloud Converters (iLovePDF, Smallpdf) | Stirling-PDF (Self-hosted) | PrivaPDF 🛡️ |
 | :--- | :--- | :--- | :--- |
-| **Lokasi Pemrosesan** | Server Cloud Publik (data dikirim ke luar) | Server lokal (butuh Docker & RAM besar) | **100% di RAM Browser Laptop Sendiri** |
+| **Dukungan Platform** | Hanya Web Browser | Butuh Docker / Linux Server | **Native macOS App + Windows PC + Web** |
+| **Lokasi Pemrosesan** | Server Cloud Publik (data dikirim ke luar) | Server lokal (butuh Docker & RAM besar) | **100% di RAM Laptop Sendiri** |
 | **Koneksi Internet** | Wajib Online | Butuh Jaringan Lokal | **Bisa Jalan di Mode Pesawat (Airplane Mode)** |
 | **Peluang Kebocoran Data** | Berisiko tinggi untuk data sensitif/rahasia | Rendah | **Nol Mutlak (Diblokir CSP `connect-src 'none'`)** |
-| **Kemudahan Penggunaan** | Sangat mudah (cukup buka browser) | Rumit (butuh setup Docker / Java) | **Sangat mudah (Klik .exe atau buka browser)** |
-| **Kecepatan** | Tergantung kecepatan upload/download | Sedang | **Instan (Langsung diproses prosesor laptop)** |
+| **Kemudahan Penggunaan** | Sangat mudah (cukup buka browser) | Rumit (butuh setup Docker / Java) | **Sangat mudah (Klik .dmg / .exe)** |
+| **Kecepatan** | Tergantung kecepatan upload/download | Sedang | **Instan (Langsung diproses chip laptop)** |
 | **Biaya & Iklan** | Terbatas (ada kuota gratis & iklan) | Gratis open-source | **100% Gratis, Tanpa Iklan, Tanpa Kuota** |
 
 ---
@@ -101,7 +115,7 @@ Situs konversi PDF populer seperti **iLovePDF**, **Smallpdf**, atau **Adobe Onli
 1. **Content Security Policy (CSP) Ketat**:
    Di dalam `index.html` terpasang konfigurasi keamanan:
    ```html
-   <meta http-equiv="Content-Security-Policy" content="... connect-src 'none'; ...">
+   <meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; ... connect-src 'none'; ...">
    ```
    *Aturan `connect-src 'none'` menjamin bahwa secara sistemik browser menolak mentah-mentah segala transmisi data keluar (`fetch()`, `XMLHttpRequest`, atau WebSocket).*
 2. **In-Memory Volatile Processing**:
@@ -126,36 +140,12 @@ npm install
 # 3. Jalankan server lokal
 npm run dev
 
-# 4. Atau jalankan aplikasi desktop Electron
+# 4. Jalankan aplikasi desktop Electron (Mac / Windows)
 npm run electron:start
 
-# 5. Build bundle produksi
-npm run build
-```
-
----
-
-## 🏗️ Struktur Proyek
-
-```text
-PrivaPDF/
-├── index.html                  # Entry point dengan CSP ketat (connect-src 'none')
-├── package.json                # Dependensi & skrip build
-├── vite.config.ts              # Konfigurasi Vite lokal
-├── tailwind.config.js          # Styling & tema warna
-├── electron/
-│   └── main.cjs                # Electron Desktop Wrapper
-├── .github/workflows/
-│   └── build-windows.yml       # CI/CD otomatis untuk build Windows (.exe)
-├── src/
-│   ├── main.tsx                # Entry point React
-│   ├── App.tsx                 # Dashboard utama & navigasi alat
-│   ├── index.css               # Styling global
-│   ├── components/             # Komponen antarmuka (UI)
-│   ├── modules/                # 7 Engine konversi 100% client-side
-│   └── utils/                  # Helper download & pembersihan memori
-├── Resources/                  # Ikon aplikasi resmi
-└── sample-files/               # File sampel untuk pengujian
+# 5. Build installer desktop:
+npm run dist:mac  # Menghasilkan .dmg untuk macOS
+npm run dist:win  # Menghasilkan .exe untuk Windows
 ```
 
 ---
