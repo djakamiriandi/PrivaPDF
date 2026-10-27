@@ -1,23 +1,53 @@
 import JSZip from 'jszip';
 
 /**
- * Triggers a browser download for a Blob and schedules an immediate revokeObjectURL
- * to guarantee that client memory is freed and no memory leak occurs.
+ * Triggers a robust browser download for a Blob.
+ * 
+ * Uses a File object to bind the filename directly to the binary representation,
+ * and sets the download attribute with mouse dispatch. Cleans up memory safely.
  */
 export function downloadBlob(blob: Blob, filename: string): void {
-  const url = URL.createObjectURL(blob);
+  const cleanFilename = filename || 'dokumen.pdf';
+
+  // Construct a File object so the filename metadata is preserved natively
+  let targetBlob: Blob = blob;
+  try {
+    targetBlob = new File([blob], cleanFilename, {
+      type: blob.type || 'application/octet-stream',
+    });
+  } catch {
+    targetBlob = blob;
+  }
+
+  const url = URL.createObjectURL(targetBlob);
   const a = document.createElement('a');
   a.style.display = 'none';
   a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
+  a.download = cleanFilename;
+  a.setAttribute('download', cleanFilename);
+  a.rel = 'noopener';
 
-  // Cleanup after click
+  document.body.appendChild(a);
+
+  // Dispatch mouse click event
+  try {
+    const event = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true,
+    });
+    a.dispatchEvent(event);
+  } catch {
+    a.click();
+  }
+
+  // Allow adequate time for Chrome's download pipeline before revoking memory
   setTimeout(() => {
-    document.body.removeChild(a);
+    if (a.parentNode) {
+      document.body.removeChild(a);
+    }
     URL.revokeObjectURL(url);
-  }, 1000);
+  }, 4000);
 }
 
 /**

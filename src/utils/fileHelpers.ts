@@ -9,11 +9,16 @@ export function formatBytes(bytes: number, decimals = 2): string {
 
 export function sanitizeFilename(name: string, newExt?: string): string {
   // Strip dangerous characters, slashes, backslashes
-  let clean = name.replace(/[/\\?%*:|"<>]/g, '-').trim();
+  let clean = (name || 'dokumen').replace(/[/\\?%*:|"<>]/g, '-').trim();
   if (newExt) {
-    clean = clean.replace(/\.[^/.]+$/, '') + (newExt.startsWith('.') ? newExt : `.${newExt}`);
+    const ext = newExt.startsWith('.') ? newExt : `.${newExt}`;
+    const lastDot = clean.lastIndexOf('.');
+    if (lastDot > 0) {
+      clean = clean.substring(0, lastDot);
+    }
+    clean = `${clean}${ext}`;
   }
-  return clean || 'document';
+  return clean || (newExt ? `dokumen${newExt.startsWith('.') ? newExt : `.${newExt}`}` : 'dokumen');
 }
 
 export function getFileExtension(filename: string): string {
