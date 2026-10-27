@@ -1,9 +1,13 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 let mainWindow = null;
 
 function createWindow() {
+  const iconPngPath = path.join(__dirname, '../build/icon.png');
+  const hasIcon = fs.existsSync(iconPngPath);
+
   mainWindow = new BrowserWindow({
     width: 1280,
     height: 850,
@@ -11,12 +15,21 @@ function createWindow() {
     minHeight: 600,
     title: 'PrivaPDF — Studio Konversi & Manipulasi PDF Offline',
     backgroundColor: '#0f172a',
+    ...(hasIcon ? { icon: iconPngPath } : {}),
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
     },
   });
+
+  if (process.platform === 'darwin' && app.dock && hasIcon) {
+    try {
+      app.dock.setIcon(iconPngPath);
+    } catch (e) {
+      // Ignore if dock setIcon fails
+    }
+  }
 
   // Load the production build
   const indexPath = path.join(__dirname, '../dist/index.html');
