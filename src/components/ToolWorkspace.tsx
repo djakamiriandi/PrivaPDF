@@ -14,6 +14,7 @@ import {
   Split,
   FileCode,
   FileText,
+  ExternalLink,
 } from 'lucide-react';
 import {
   ToolDefinition,
@@ -619,13 +620,30 @@ export const ToolWorkspace: React.FC<ToolWorkspaceProps> = ({ tool, onBack }) =>
                 </p>
               </div>
 
-              <button
-                onClick={() => downloadBlob(result.blob, result.filename)}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors shadow-sm shrink-0"
-              >
-                <Download className="w-4 h-4" />
-                <span>Unduh Lagi</span>
-              </button>
+              <div className="flex items-center gap-2 shrink-0">
+                {result.filename.endsWith('.pdf') && (
+                  <button
+                    onClick={() => {
+                      const url = URL.createObjectURL(result.blob);
+                      window.open(url, '_blank');
+                      setTimeout(() => URL.revokeObjectURL(url), 60000);
+                    }}
+                    className="flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors border border-indigo-200 dark:border-indigo-800"
+                    title="Buka pratinjau PDF langsung di tab baru browser"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Lihat di Tab Baru</span>
+                  </button>
+                )}
+
+                <button
+                  onClick={() => downloadBlob(result.blob, result.filename)}
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors shadow-sm"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Unduh File</span>
+                </button>
+              </div>
             </div>
           )}
 
