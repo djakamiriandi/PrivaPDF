@@ -1,5 +1,22 @@
-node_modules
-dist
-release
-.DS_Store
+# Dependencies
+node_modules/
+
+# Production & Packaging Builds
+dist/
+release/
+
+# Logs & Debugging
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment & Local Overrides
 *.local
+.env
+.env.*
+
+# OS Metadata
+.DS_Store
+*/.DS_Store
+Thumbs.db
