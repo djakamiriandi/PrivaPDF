@@ -33,7 +33,7 @@
 > **JANGAN** klik tombol hijau `Code -> Download ZIP` di atas! Itu hanya berisi kode sumber mentah (*source code*) dan tidak bisa langsung dijalankan tanpa Node.js.  
 >  
 > 👉 **Unduh aplikasi desktop siap pakai langsung di sini:**  
-> 🍏 [**Download untuk MacBook / macOS (PrivaPDF-1.0.0-arm64.dmg)**](https://github.com/djakamiriandi/PrivaPDF/releases/latest)  
+> 🍏 [**Download untuk MacBook / macOS (PrivaPDF-1.0.1-arm64.dmg)**](https://github.com/djakamiriandi/PrivaPDF/releases/latest)  
 > 🪟 [**Download untuk Windows (PrivaPDF-Windows-x64.zip)**](https://github.com/djakamiriandi/PrivaPDF/releases/latest)
 
 ---
