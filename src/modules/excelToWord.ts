@@ -8,19 +8,34 @@ import {
   TableRow,
   TableCell,
   WidthType,
-  BorderStyle,
   ShadingType,
+  PageOrientation,
 } from 'docx';
 import { readFileAsArrayBuffer } from '../utils/fileHelpers';
+import { ExcelToWordOptions } from '../types';
 
 /**
  * Converts an Excel spreadsheet (.xlsx, .xls) to a Microsoft Word document (.docx).
- * Converts every sheet into a cleanly formatted native Word table.
+ * Converts sheet(s) into cleanly formatted native Word table(s) with selectable orientation.
  */
 export async function convertExcelToWord(
   file: File,
-  onProgress?: (progress: number, message: string) => void
+  optionsOrProgress?: ExcelToWordOptions | ((progress: number, message: string) => void),
+  maybeProgress?: (progress: number, message: string) => void
 ): Promise<Blob> {
+  let options: ExcelToWordOptions | undefined;
+  let onProgress: ((progress: number, message: string) => void) | undefined;
+
+  if (typeof optionsOrProgress === 'function') {
+    onProgress = optionsOrProgress;
+  } else {
+    options = optionsOrProgress;
+    onProgress = maybeProgress;
+  }
+
+  const orientation = options?.orientation ?? 'landscape';
+  const targetSheet = options?.sheetName ?? 'all';
+
   onProgress?.(15, 'Membaca data Excel...');
   const arrayBuffer = await readFileAsArrayBuffer(file);
   const workbook = XLSX.read(arrayBuffer, { type: 'array' });
@@ -33,7 +48,10 @@ export async function convertExcelToWord(
     }),
   ];
 
-  const sheetNames = workbook.SheetNames;
+  let sheetNames = workbook.SheetNames;
+  if (targetSheet !== 'all' && sheetNames.includes(targetSheet)) {
+    sheetNames = [targetSheet];
+  }
 
   for (let sIdx = 0; sIdx < sheetNames.length; sIdx++) {
     const sheetName = sheetNames[sIdx];
@@ -120,6 +138,16 @@ export async function convertExcelToWord(
   const doc = new Document({
     sections: [
       {
+        properties: {
+          page: {
+            size: {
+              orientation:
+                orientation === 'portrait'
+                  ? PageOrientation.PORTRAIT
+                  : PageOrientation.LANDSCAPE,
+            },
+          },
+        },
         children,
       },
     ],

@@ -22,6 +22,7 @@ import {
   ConversionProgress,
   ConversionResult,
   ExcelToPdfOptions,
+  ExcelToWordOptions,
   ImageToPdfOptions,
   PdfToImageOptions,
   SplitPdfOptions,
@@ -60,6 +61,12 @@ export const ToolWorkspace: React.FC<ToolWorkspaceProps> = ({ tool, onBack }) =>
     theme: 'blue',
   });
 
+  // Excel to Word options
+  const [excelWordOptions, setExcelWordOptions] = useState<ExcelToWordOptions>({
+    sheetName: 'all',
+    orientation: 'landscape',
+  });
+
   // Image to PDF options
   const [imageOptions, setImageOptions] = useState<ImageToPdfOptions>({
     orientation: 'auto',
@@ -81,12 +88,13 @@ export const ToolWorkspace: React.FC<ToolWorkspaceProps> = ({ tool, onBack }) =>
 
   // Read metadata when Excel file is added
   useEffect(() => {
-    if (tool.id === 'excel-to-pdf' && files.length > 0) {
+    if ((tool.id === 'excel-to-pdf' || tool.id === 'excel-to-word') && files.length > 0) {
       readExcelMetadata(files[0].file)
         .then((meta) => {
           setExcelSheets(meta.sheetNames);
           if (meta.sheetNames.length > 0) {
             setExcelOptions((prev) => ({ ...prev, sheetName: 'all' }));
+            setExcelWordOptions((prev) => ({ ...prev, sheetName: 'all' }));
           }
         })
         .catch(() => setExcelSheets([]));
@@ -192,7 +200,7 @@ export const ToolWorkspace: React.FC<ToolWorkspaceProps> = ({ tool, onBack }) =>
           break;
         }
         case 'excel-to-word': {
-          outputBlob = await convertExcelToWord(files[0].file, updateProg);
+          outputBlob = await convertExcelToWord(files[0].file, excelWordOptions, updateProg);
           outputFilename = sanitizeFilename(files[0].name, '.docx');
           break;
         }
@@ -392,6 +400,75 @@ export const ToolWorkspace: React.FC<ToolWorkspaceProps> = ({ tool, onBack }) =>
                       <option value="a4">A4 (210 × 297 mm)</option>
                       <option value="letter">US Letter</option>
                     </select>
+                  </div>
+                </div>
+              )}
+
+              {/* Excel to Word Options */}
+              {tool.id === 'excel-to-word' && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Sheet Selector */}
+                  <div>
+                    <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1.5">
+                      Pilih Lembar Kerja (Sheet)
+                    </label>
+                    <select
+                      value={excelWordOptions.sheetName}
+                      onChange={(e) =>
+                        setExcelWordOptions({ ...excelWordOptions, sheetName: e.target.value })
+                      }
+                      className="w-full text-xs rounded-xl p-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                    >
+                      <option value="all">Semua Lembar Kerja (All Sheets)</option>
+                      {excelSheets.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Orientation */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-medium text-slate-600 dark:text-slate-400">
+                        Orientasi Halaman Dokumen Word
+                      </label>
+                      <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
+                        ✨ Fitur Baru
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExcelWordOptions({ ...excelWordOptions, orientation: 'landscape' })
+                        }
+                        className={`text-xs py-2 px-3 rounded-xl border font-medium transition-colors ${
+                          excelWordOptions.orientation === 'landscape'
+                            ? 'bg-indigo-50 dark:bg-indigo-950 border-indigo-500 text-indigo-600 dark:text-indigo-400 font-bold shadow-sm'
+                            : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                        }`}
+                      >
+                        Landscape (Lebar)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExcelWordOptions({ ...excelWordOptions, orientation: 'portrait' })
+                        }
+                        className={`text-xs py-2 px-3 rounded-xl border font-medium transition-colors ${
+                          excelWordOptions.orientation === 'portrait'
+                            ? 'bg-indigo-50 dark:bg-indigo-950 border-indigo-500 text-indigo-600 dark:text-indigo-400 font-bold shadow-sm'
+                            : 'border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                        }`}
+                      >
+                        Portrait (Tegak)
+                      </button>
+                    </div>
+                    <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+                      Disarankan <strong>Landscape</strong> agar tabel Excel dengan kolom lebar tidak terpotong.
+                    </p>
                   </div>
                 </div>
               )}

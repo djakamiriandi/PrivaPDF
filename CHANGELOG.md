@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.1] - 2026-10-29
+
+### Added
+- **Excel to Word Converter Improvements**:
+  - **Page Orientation Selector**: Ditambahkan pilihan orientasi **Landscape (Lebar)** dan **Portrait (Tegak)** untuk dokumen Word (.docx) hasil konversi. Orientasi Landscape memastikan tabel Excel dengan banyak kolom tampil rapi tanpa terpotong.
+  - **Sheet Selector**: Mendukung pemilihan sheet tertentu atau konversi seluruh sheet sekaligus ke dokumen Word.
+  - **UI Badge**: Menampilkan indikator opsi visual di panel pengaturan konversi.
+
+---
+
 ## [1.0.0] - 2026-10-27
 
 ### Added

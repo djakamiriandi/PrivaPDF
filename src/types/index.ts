@@ -41,6 +41,11 @@ export interface ExcelToPdfOptions {
   theme: TableTheme;
 }
 
+export interface ExcelToWordOptions {
+  sheetName: string; // 'all' or specific sheet
+  orientation: 'landscape' | 'portrait';
+}
+
 export interface ImageToPdfOptions {
   orientation: PageOrientation;
   margin: MarginOption;
